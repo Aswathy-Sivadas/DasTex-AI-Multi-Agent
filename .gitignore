@@ -1,2 +1,6 @@
 node_modules
 .env
+# Local secrets
+backend/services/auth/serviceAccountKey.json
+.env
+.env.*
