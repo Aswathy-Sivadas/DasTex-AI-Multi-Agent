@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
-const userSchema=new mongoose.userSchema({
-    firbaseUid:{
+const userSchema=new mongoose.Schema({
+    firebaseUid:{
         type:String,
         unique:true
     },
