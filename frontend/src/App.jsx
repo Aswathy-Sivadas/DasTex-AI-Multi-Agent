@@ -1,34 +1,24 @@
 import React from 'react'
-import { signInWithPopup } from 'firebase/auth'
-import { auth, googleProvider } from '../utils/firebase'
-import api from "../utils/axios.js"
+import Home from './pages/Home.jsx'
+import getCurrentUser from './features/getCurrentUser.js'
+import { useEffect } from 'react'
+import { setUserData } from './redux/userSlice.js'
+import { useDispatch } from 'react-redux'
 function App() {
-    const handleLogin= async (token)=>{
-      try{
-        const {data} = await api.post("/auth/login",{token})
-        console.log(data)
-      }
-      catch(error)
-      {
-        console.log(error)
-      }
+  const dispatch=useDispatch()
+  useEffect(()=>{
+    const getUser=async ()=>{
+      const data=await getCurrentUser()
+      dispatch(setUserData(data))
     }
-
-  const googleLogin = async () => {
-    const data = await signInWithPopup(auth, googleProvider)
-    const token=await data.user.getIdToken()
-    console.log(token)
-    await handleLogin(token)
-    
-  }
-
+    getUser()
+  },[])
   return (
-    <div className='w-full h-screen bg-black flex items-center justify-center'>
-      <button className='w-50 h-24 bg-white' onClick={googleLogin}>
-        continue with google
-      </button>
-    </div>
+    <>
+      <Home />
+    </>
   )
+
 }
 
 export default App
