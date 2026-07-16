@@ -9,8 +9,6 @@ dotenv.config();
 
 const port=process.env.PORT
 
-
-
 const app=express()
 app.use(cors({
     origin: process.env.FRONTEND_URL,
@@ -18,13 +16,12 @@ app.use(cors({
 }));
 app.use(cookieParser())
 app.use("/api/auth",proxy(process.env.AUTH_SERVICE))
+app.use("/api/agents",proxy(process.env.AGENT_SERVICE))
 app.get("/api/me",protect,getCurrentUser)
 app.get("/",(req,res)=>{
     res.json({message: "Gateway is running"})
 })
 
-
-app.listen(port,()=>
-{
+app.listen(port,()=>{
     console.log(`Gateway has started at port ${port}`);
 })
